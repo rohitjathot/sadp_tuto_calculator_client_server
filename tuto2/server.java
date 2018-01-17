@@ -49,6 +49,7 @@ class ClientHandler extends Thread
     {
         String received;
         String toreturn;
+        String history="";
         while (true) 
         {
             try {
@@ -57,6 +58,7 @@ class ClientHandler extends Thread
                 { 
                     System.out.println("Client " + this.s + " sends exit...");
                     System.out.println("Closing this connection.");
+                    dos.writeUTF(history);
                     this.s.close();
                     System.out.println("Connection closed");
                     break;
@@ -64,9 +66,12 @@ class ClientHandler extends Thread
                
                 System.out.println("calculating : "+received);
 				try{
-					dos.writeUTF(""+(Double)(new javax.script.ScriptEngineManager()
-					        					  .getEngineByName("js")
-					        					  .eval(received+"*1.0")));  
+                    String ans = ""+(Double)(new javax.script.ScriptEngineManager()
+                                                  .getEngineByName("js")
+                                                  .eval(received+"*1.0"));
+					dos.writeUTF(ans);
+                    history+=received+" : "+ans+"\n";  
+
 				}catch(Exception e){
 					dos.writeUTF("Invalid Input");
 				}

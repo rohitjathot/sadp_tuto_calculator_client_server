@@ -13,7 +13,10 @@ class client{
 			dout.writeUTF(str);  
 			dout.flush();  
 			str2=din.readUTF();  
-			System.out.println("ans is : "+str2);  
+			if(!str.equals("exit"))
+				System.out.println("ans is : "+str2);
+			else
+				System.out.println(str2);
 		}  
 		
 		dout.close();  
